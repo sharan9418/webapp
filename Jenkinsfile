@@ -1,30 +1,23 @@
 pipeline {
     agent any
+
     tools {
-        maven 'Maven'
+        maven 'Maven_3.8.7'
+        jdk 'JDK_17'
     }
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/sharan9418/webapp.git'
+                git  'https://github.com/sharan9418/webapp.git'
             }
         }
-        stage('Build') {
+
+        stage('Build WAR') {
             steps {
                 sh 'mvn clean package'
             }
         }
-        stage('Archive') {
-            steps {
-                archiveArtifacts artifacts: 'target/*.war', fingerprint: true
-            }
-        }
-        stage('Deploy') {
-            steps {
-                  sh 'mvn clean package'
-               ansiblePlaybook playbook: 'ansible/deploy.yml', inventory: 'ansible/hosts.ini'
-          
-            }
-        }
+
     }
 }
