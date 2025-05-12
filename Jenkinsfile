@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/sharan9418/webapp.git'
+                git branch: 'main', url: 'https://github.com/sharan9418/webapp.git'
             }
         }
         stage('Build') {
